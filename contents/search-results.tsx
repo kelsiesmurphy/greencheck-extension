@@ -1,9 +1,10 @@
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from "components/ui/tooltip"
+// import {
+//   Tooltip,
+//   TooltipContent,
+//   TooltipProvider,
+//   TooltipTrigger
+// } from "components/ui/tooltip"
+import cssText from "data-text:~style.css"
 import type {
   PlasmoCSConfig,
   PlasmoCSUIProps,
@@ -11,9 +12,16 @@ import type {
 } from "plasmo"
 import type { FC } from "react"
 import { useEffect, useState } from "react"
+import { Button } from "~components/ui/button"
 
 export const config: PlasmoCSConfig = {
   matches: ["https://www.google.com/*"]
+}
+
+export const getStyle = () => {
+  const style = document.createElement("style")
+  style.textContent = cssText
+  return style
 }
 
 async function apiCheck(url) {
@@ -64,18 +72,23 @@ const SearchResults: FC<PlasmoCSUIProps> = ({ anchor }) => {
     })
   }, [url])
 
-  if (result && result.green) {
-    return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger>Hover</TooltipTrigger>
-          <TooltipContent>
-            Hosted by: {JSON.stringify(result.hosted_by)}
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    )
-  }
+  // if (result && result.green) {
+  //   return (
+  //     <TooltipProvider>
+  //       <Tooltip>
+  //         <TooltipTrigger asChild>
+  //           <Button variant="outline" className="rounded-lg">Hover</Button>
+  //         </TooltipTrigger>
+  //         <TooltipContent>
+  //           Hosted by: {JSON.stringify(result.hosted_by)}
+  //         </TooltipContent>
+  //       </Tooltip>
+  //     </TooltipProvider>
+  //   )
+  // }
+  return (
+    <></>
+  )
 }
 
 export default SearchResults
