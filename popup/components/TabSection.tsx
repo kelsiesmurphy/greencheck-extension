@@ -6,7 +6,7 @@ import { Crown, Sprout } from "lucide-react"
 import CheckEmissions from "./CheckEmissions"
 import MoreInfo from "./MoreInfo"
 
-const TabSection = () => {
+const TabSection = ({ isValidated, validationMessage, handleValidation }) => {
   return (
     <Tabs defaultValue="check-emissions">
       <TabsList className="grid w-full grid-cols-2">
@@ -21,7 +21,11 @@ const TabSection = () => {
         <CheckEmissions />
       </TabsContent>
       <TabsContent value="more-info" className="py-2">
-        <MoreInfo />
+        <MoreInfo
+          isValidated={isValidated}
+          validationMessage={validationMessage}
+          handleValidation={handleValidation}
+        />
       </TabsContent>
     </Tabs>
   )
