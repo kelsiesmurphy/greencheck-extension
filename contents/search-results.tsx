@@ -1,22 +1,13 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger
-} from "components/ui/accordion"
-import { Alert, AlertDescription, AlertTitle } from "components/ui/alert"
 import cssText from "data-text:~style.css"
-import { Sprout } from "lucide-react"
 import type {
   PlasmoCSConfig,
   PlasmoCSUIProps,
-  PlasmoGetInlineAnchorList,
-  PlasmoGetOverlayAnchorList
+  PlasmoGetInlineAnchorList
 } from "plasmo"
 import type { FC } from "react"
 import { useEffect, useState } from "react"
 
-import { Button } from "~components/ui/button"
+import GreenCheckDropDown from "~components/green-check-dropdown"
 
 export const config: PlasmoCSConfig = {
   matches: ["https://www.google.com/*"]
@@ -81,41 +72,7 @@ const SearchResults: FC<PlasmoCSUIProps> = ({ anchor }) => {
     }
   }, [checked, result, anchor.element])
 
-  if (result && result.green)
-    return (
-      <Accordion type="single" collapsible className="w-full pb-4">
-        <AccordionItem value="item-1">
-          <AccordionTrigger>
-            This website is hosted by a provider committed to reducing its
-            environmental impact.
-          </AccordionTrigger>
-          <AccordionContent className="space-y-2">
-            <p>
-              Hosted by:{" "}
-              <a href={result.hosted_by_website} className="font-semibold">
-                {result.hosted_by}
-              </a>
-            </p>
-            {result.supporting_documents.length > 0 ? (
-              <div className="space-y-1">
-                <p>Supporting documents:</p>
-                <ol className="list-disc list-inside">
-                  {result.supporting_documents.map((document) => {
-                    return (
-                      <li>
-                        <a href={document.link}>{document.title}</a>
-                      </li>
-                    )
-                  })}
-                </ol>
-              </div>
-            ) : (
-              <p>There are no supporting documents available.</p>
-            )}
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-    )
+  if (result && result.green) return <GreenCheckDropDown result={result} />
 
   return null
 }

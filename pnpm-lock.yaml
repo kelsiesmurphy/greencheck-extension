@@ -32,6 +32,9 @@ importers:
       '@radix-ui/react-tooltip':
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@18.2.18)(@types/react@18.2.48)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@tgwf/co2':
+        specifier: ^0.15.0
+        version: 0.15.0
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.0
@@ -81,6 +84,9 @@ importers:
       '@types/react-dom':
         specifier: 18.2.18
         version: 18.2.18
+      '@types/tgwf__co2':
+        specifier: ^0.14.2
+        version: 0.14.2
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.39)
@@ -96,6 +102,9 @@ importers:
       typescript:
         specifier: 5.3.3
         version: 5.3.3
+      webextension-polyfill:
+        specifier: ^0.12.0
+        version: 0.12.0
 
 packages:
 
@@ -1683,6 +1692,10 @@ packages:
     resolution: {integrity: sha512-+PmQX0PiAYPMeVYe237LJAYvOMYW1j2rH5YROyS3b4CTVJum34HfRvKvAzozHAQG0TnHNdUfY9nCeUyRAs//cw==}
     engines: {node: '>=14.16'}
 
+  '@tgwf/co2@0.15.0':
+    resolution: {integrity: sha512-H3Y+gw+GqRqzLj3rFZNfxHMSi2WpL3eCnnJqs9vOZHUM7/t+aaIG8WheV9PlILMat2bXXCk0hkJJTEW/NFDmTw==}
+    engines: {node: '>=14.0.0'}
+
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
@@ -1725,6 +1738,9 @@ packages:
 
   '@types/scheduler@0.23.0':
     resolution: {integrity: sha512-YIoDCTH3Af6XM5VuwGG/QL/CJqga1Zm3NkU3HZ4ZHK2fRMPYP1VczsTUqtsf43PH/iJNVlPHAo2oWX7BSdB2Hw==}
+
+  '@types/tgwf__co2@0.14.2':
+    resolution: {integrity: sha512-kgSh14wLbydB4TwHYVq/1pbOC4ww3EDNgLQ3kZSH6wZyDmBMTRyEaIBqXtCmuhKCotU71QAOpkIO3IHbHTtANA==}
 
   '@types/trusted-types@2.0.7':
     resolution: {integrity: sha512-ScaPdn1dQczgbl0QFTeTOmVHFULt394XJgOQNoyVhZ6r2vLnMLJfBPd53SB52T/3G36VI1/g2MZaX0cwDuXsfw==}
@@ -3579,6 +3595,9 @@ packages:
 
   weak-lru-cache@1.2.2:
     resolution: {integrity: sha512-DEAoo25RfSYMuTGc9vPJzZcZullwIqRDSI9LOy+fkCJPi6hykCnfKaXTuPBDuXAUcqHXyOgFtHNp/kB2FjYHbw==}
+
+  webextension-polyfill@0.12.0:
+    resolution: {integrity: sha512-97TBmpoWJEE+3nFBQ4VocyCdLKfw54rFaJ6EVQYLBCXqCIpLSZkwGgASpv4oPt9gdKCJ80RJlcmNzNn008Ag6Q==}
 
   webidl-conversions@4.0.2:
     resolution: {integrity: sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==}
@@ -5527,6 +5546,8 @@ snapshots:
     dependencies:
       defer-to-connect: 2.0.1
 
+  '@tgwf/co2@0.15.0': {}
+
   '@trysound/sax@0.2.0': {}
 
   '@types/chrome@0.0.258':
@@ -5567,6 +5588,8 @@ snapshots:
       csstype: 3.1.3
 
   '@types/scheduler@0.23.0': {}
+
+  '@types/tgwf__co2@0.14.2': {}
 
   '@types/trusted-types@2.0.7': {}
 
@@ -7497,6 +7520,8 @@ snapshots:
       defaults: 1.0.4
 
   weak-lru-cache@1.2.2: {}
+
+  webextension-polyfill@0.12.0: {}
 
   webidl-conversions@4.0.2: {}
 
