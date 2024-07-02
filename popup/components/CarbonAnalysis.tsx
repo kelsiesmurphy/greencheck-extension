@@ -14,18 +14,35 @@ import {
 
 const CarbonAnalysis = () => {
   const [loading, setLoading] = useState(false)
-  const [pageSize, setPageSize] = useState(null)
+  const [lighthouseDiagnostics, setLighthouseDiagnostics] = useState(null)
   const [emissions, setEmissions] = useState(null)
+
+  const getLighthouseReport = async () => {
+    const url = "https://toastlog.com/"
+
+    try {
+      const res = await fetch(
+        `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${url}&key=${process.env.PLASMO_PUBLIC_GOOGLE_CLOUD_KEY}`
+      )
+      const data = await res.json()
+      setLighthouseDiagnostics(
+        data.lighthouseResult.audits.diagnostics.details.items[0]
+      )
+      return data.lighthouseResult.audits.diagnostics.details.items[0]
+    } catch (err) {
+      console.log(err)
+      throw err
+    }
+  }
 
   async function checkWebsite() {
     setLoading(true)
     try {
-      const pageSizeInBytes = await calculatePageSize()
-      setPageSize(pageSizeInBytes)
+      const pageSizeInBytes = await getLighthouseReport()
 
       const swd = new co2({ model: "swd" })
-      const result = await swd.perByte(pageSizeInBytes)
-      setEmissions(result)
+      const carbonResult = await swd.perByte(pageSizeInBytes.totalByteWeight)
+      setEmissions(carbonResult)
     } catch (error) {
       console.error("Error checking website:", error)
     } finally {
@@ -33,41 +50,39 @@ const CarbonAnalysis = () => {
     }
   }
 
-  async function calculatePageSize() {
-    let totalSize = 0
-
-    // Calculate size of HTML content
-    const htmlSize = document.documentElement.outerHTML.length
-    totalSize += htmlSize
-
-    // Calculate size of resources
-    const resources = performance.getEntriesByType("resource")
-    resources.forEach((resource) => {
-      totalSize += resource.transferSize || 0
-    })
-
-    return totalSize
-  }
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{copyText.popup.tabTwo.buttonText}</CardTitle>
+        <CardTitle className="text-lg">{copyText.popup.tabTwo.buttonText}</CardTitle>
         <CardDescription>
           {copyText.popup.tabTwo.afterLicenseKeyEntry.description}
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Button onClick={checkWebsite}>
-          {loading ? (
-            <>
-              <LoaderCircle className="mr-2 h-4 w-4 animate-spin" /> Running...
-            </>
-          ) : (
-            "Test Website"
-          )}
-        </Button>
-        <p>Page Size in Bytes: {JSON.stringify(pageSize)}</p>
-        <p>Results: {JSON.stringify(emissions)}</p>
+        {!emissions ? (
+          <Button onClick={checkWebsite}>
+            {loading ? (
+              <>
+                <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />{" "}
+                Running...
+              </>
+            ) : (
+              "Test Website"
+            )}
+          </Button>
+        ) : (
+          <>
+            <p>
+              Page Size:{" "}
+              {JSON.stringify(
+                lighthouseDiagnostics &&
+                  Math.round(lighthouseDiagnostics.totalByteWeight / 1024)
+              )}{" "}
+              kB
+            </p>
+            <p>Carbon emitted per page load: {emissions.toFixed(2)}g</p>
+          </>
+        )}
       </CardContent>
     </Card>
   )

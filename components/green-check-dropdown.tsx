@@ -9,9 +9,7 @@ const GreenCheckDropDown = ({ result, text }) => {
   return (
     <Accordion type="single" collapsible className="w-full pb-4">
       <AccordionItem value="item-1">
-        <AccordionTrigger>
-          {text}
-        </AccordionTrigger>
+        <AccordionTrigger>{text}</AccordionTrigger>
         <AccordionContent className="space-y-2">
           <p>
             Hosted by:{" "}
@@ -23,10 +21,12 @@ const GreenCheckDropDown = ({ result, text }) => {
             <div className="space-y-1">
               <p>Supporting documents:</p>
               <ol className="list-disc list-inside">
-                {result.supporting_documents.map((document) => {
+                {result.supporting_documents.map((document, index) => {
                   return (
-                    <li>
-                      <a href={document.link} className="hover:underline">{document.title}</a>
+                    <li key={index}>
+                      <a href={document.link} className="hover:underline">
+                        {document.title}
+                      </a>
                     </li>
                   )
                 })}

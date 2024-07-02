@@ -14,7 +14,7 @@ export default function GreenEnergyCheck({ loading, greenHost }) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{copyText.popup.tabOne.buttonText}</CardTitle>
+        <CardTitle className="text-lg">{copyText.popup.tabOne.buttonText}</CardTitle>
         <CardDescription>
           {copyText.popup.tabOne.description}
         </CardDescription>
