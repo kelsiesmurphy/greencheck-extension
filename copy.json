@@ -1,0 +1,27 @@
+{
+  "overview": {
+    "title": "GreenCheck",
+    "description": "GreenCheck is a Chrome extension that identifies websites powered by green energy. It adds an icon to search results, showing which sites use green energy, and provides detailed info on the sources."
+  },
+  "popup": {
+    "tabOne": 
+      {
+        "buttonText": "Green Energy Check",
+        "description": "See if the current website uses green energy and discover the sources behind it."
+      },
+      "tabTwo":
+      {
+        "buttonText": "Carbon Analysis",
+        "beforeLicenseKeyEntry": {
+          "description": "Unlock premium insights with your license key. Get a detailed analysis of the web page’s carbon emissions and tips to reduce its carbon footprint.",
+          "explanationCard": {
+            "title": "Unlock Advanced Features",
+            "description": "Upgrade for in-depth analysis of websites' carbon emissions. A one-time purchase gives insights and tips for greener browsing."
+          }
+        },
+        "afterLicenseKeyEntry": {
+          "description": "You now have access to the Carbon Analysis tab, providing detailed carbon emissions data and tips for greener web pages."
+        }
+      }
+  }
+}

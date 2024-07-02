@@ -18,6 +18,7 @@ import {
   FormMessage
 } from "components/ui/form"
 import { Input } from "components/ui/input"
+import copyText from "copy.json"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
@@ -30,19 +31,15 @@ const formSchema = z.object({
     })
 })
 
-export default function MoreInfo({
-  isValidated,
-  validationMessage,
-  handleValidation
-}) {
-  const form = useForm<z.infer<typeof formSchema>>({
+export default function LicenseForm({ handleValidation }) {
+  const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       licensekey: ""
     }
   })
 
-  async function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values) {
     const url = "https://api.gumroad.com/v2/licenses/verify"
     const productID = "umoqOSpjHvvaouQcW5kI7w=="
 
@@ -78,25 +75,19 @@ export default function MoreInfo({
   }
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Validate</CardTitle>
-        <CardDescription>
-          Validate your license key (you would have received it via email, or on
-          Gumroad's checkout page).
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        {isValidated ? (
-          <div>
-            <p>{validationMessage}</p>
-            {/* Additional information can be displayed here */}
-            <p>
-              Here is some additional information available only to validated
-              users.
-            </p>
-          </div>
-        ) : (
+    <div className="space-y-4">
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-xl">
+            {copyText.popup.tabTwo.buttonText}
+          </CardTitle>
+          <CardDescription>
+            {copyText.popup.tabTwo.beforeLicenseKeyEntry.description}
+          </CardDescription>
+        </CardHeader>
+      </Card>
+      <Card>
+        <CardContent className="pt-6">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField
@@ -118,13 +109,10 @@ export default function MoreInfo({
               <Button type="submit" className="w-full">
                 Register
               </Button>
-              {validationMessage && (
-                <p style={{ color: "red" }}>{validationMessage}</p>
-              )}
             </form>
           </Form>
-        )}
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   )
 }

@@ -72,7 +72,7 @@ const SearchResults: FC<PlasmoCSUIProps> = ({ anchor }) => {
     }
   }, [checked, result, anchor.element])
 
-  if (result && result.green) return <GreenCheckDropDown result={result} />
+  if (result && result.green) return <GreenCheckDropDown result={result} text={"This website is hosted by a provider committed to reducing its environmental impact."} />
 
   return null
 }

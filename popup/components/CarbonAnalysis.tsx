@@ -1,49 +1,25 @@
 import { co2 } from "@tgwf/co2"
-import { Button } from "components/ui/button"
+import copyText from "copy.json"
+import { LoaderCircle } from "lucide-react"
+import React, { useState } from "react"
+
+import { Button } from "~components/ui/button"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle
-} from "components/ui/card"
-import { LoaderCircle } from "lucide-react"
-import { useState } from "react"
-import Browser from "webextension-polyfill"
+} from "~components/ui/card"
 
-import GreenCheckDropDown from "~components/green-check-dropdown"
-
-export default function CheckEmissions() {
+const CarbonAnalysis = () => {
   const [loading, setLoading] = useState(false)
   const [pageSize, setPageSize] = useState(null)
   const [emissions, setEmissions] = useState(null)
-  const [greenHost, setGreenHost] = useState(null)
-
-  async function usesGreenHostCheck(url) {
-    try {
-      const hostname = new URL(url).hostname
-      const response = await fetch(
-        `https://api.thegreenwebfoundation.org/api/v3/greencheck/${hostname}`
-      )
-
-      const data = await response.json()
-      return data
-    } catch (error) {
-      console.error("Error checking green energy status:", error)
-      return null
-    }
-  }
 
   async function checkWebsite() {
     setLoading(true)
     try {
-      const tabs = await Browser.tabs.query({
-        active: true,
-        currentWindow: true
-      })
-      const usesGreenHost = await usesGreenHostCheck(tabs[0].url)
-      setGreenHost(usesGreenHost)
-
       const pageSizeInBytes = await calculatePageSize()
       setPageSize(pageSizeInBytes)
 
@@ -72,12 +48,13 @@ export default function CheckEmissions() {
 
     return totalSize
   }
-
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Check Website</CardTitle>
-        <CardDescription>Check the emissions of the website</CardDescription>
+        <CardTitle>{copyText.popup.tabTwo.buttonText}</CardTitle>
+        <CardDescription>
+          {copyText.popup.tabTwo.afterLicenseKeyEntry.description}
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <Button onClick={checkWebsite}>
@@ -89,16 +66,11 @@ export default function CheckEmissions() {
             "Test Website"
           )}
         </Button>
-        {greenHost && greenHost.green ? (
-          <div className="text-left">
-            <GreenCheckDropDown result={greenHost}/>
-          </div>
-        ) : (
-          <p>This website is not hosted on Green Energy</p>
-        )}
         <p>Page Size in Bytes: {JSON.stringify(pageSize)}</p>
         <p>Results: {JSON.stringify(emissions)}</p>
       </CardContent>
     </Card>
   )
 }
+
+export default CarbonAnalysis

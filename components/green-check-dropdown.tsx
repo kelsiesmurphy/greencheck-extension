@@ -5,13 +5,12 @@ import {
   AccordionTrigger
 } from "components/ui/accordion"
 
-const GreenCheckDropDown = ({ result }) => {
+const GreenCheckDropDown = ({ result, text }) => {
   return (
     <Accordion type="single" collapsible className="w-full pb-4">
       <AccordionItem value="item-1">
         <AccordionTrigger>
-          This website is hosted by a provider committed to reducing its
-          environmental impact.
+          {text}
         </AccordionTrigger>
         <AccordionContent className="space-y-2">
           <p>
