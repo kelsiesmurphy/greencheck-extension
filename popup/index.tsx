@@ -2,7 +2,6 @@ import { ThemeProvider } from "components/theme-provider"
 import { useEffect, useState } from "react"
 
 import HeaderSection from "./components/HeaderSection"
-import MoreInfo from "./components/LicenseForm"
 import TabSection from "./components/TabSection"
 
 import "~style.css"

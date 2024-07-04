@@ -41,7 +41,7 @@ export default function LicenseForm({ handleValidation }) {
 
   async function onSubmit(values) {
     const url = "https://api.gumroad.com/v2/licenses/verify"
-    const productID = "umoqOSpjHvvaouQcW5kI7w=="
+    const productID = "1lMFu-kYVe1oKzAajE6uvg=="
 
     const response = await fetch(url, {
       method: "POST",
