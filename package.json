@@ -1,9 +1,9 @@
 {
-  "name": "greencheck-v2",
-  "displayName": "Greencheck v2",
+  "name": "greencheck",
+  "displayName": "Greencheck",
   "version": "0.0.1",
-  "description": "Tells you at a glance if a website is running on green energy",
-  "author": "Kelsie Murphy ",
+  "description": "GreenCheck tells you at a glance which websites are hosted using green energy straight from your search results.",
+  "author": "Kelsie Murphy",
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
@@ -50,7 +50,7 @@
     "host_permissions": [
       "https://*/*"
     ],
-    "key": "$CRX_KEY",
+    
     "web_accessible_resources": [
       {
         "resources": [
