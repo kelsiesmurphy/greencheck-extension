@@ -9,7 +9,6 @@ import copyText from "copy.json"
 import { Loader2Icon, Sprout, XCircle } from "lucide-react"
 
 import GreenCheckDropDown from "~components/green-check-dropdown"
-import { Alert, AlertDescription, AlertTitle } from "~components/ui/alert"
 
 export default function GreenEnergyCheck({ loading, greenHost }) {
   return (
