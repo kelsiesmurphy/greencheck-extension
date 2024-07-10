@@ -6,13 +6,17 @@ import { FileBarChart2, Sprout } from "lucide-react"
 import { useEffect, useState } from "react"
 import Browser from "webextension-polyfill"
 
+import CarbonAnalysis from "./CarbonAnalysis"
 import GreenEnergyCheck from "./GreenEnergyCheck"
 import LicenseForm from "./LicenseForm"
-import CarbonAnalysis from "./CarbonAnalysis"
 
 const TabSection = ({ isValidated, handleValidation }) => {
   const [greenHost, setGreenHost] = useState(null)
+  const [url, setURL] = useState(null)
   const [loading, setLoading] = useState(true)
+
+  const [lighthouseDiagnostics, setLighthouseDiagnostics] = useState(null)
+  const [emissions, setEmissions] = useState(null)
 
   useEffect(() => {
     async function fetchGreenHost() {
@@ -20,6 +24,7 @@ const TabSection = ({ isValidated, handleValidation }) => {
         active: true,
         currentWindow: true
       })
+      setURL(tabs[0].url)
       const usesGreenHost = await usesGreenHostCheck(tabs[0].url)
 
       setTimeout(() => {
@@ -27,7 +32,6 @@ const TabSection = ({ isValidated, handleValidation }) => {
         setLoading(false)
       }, 1000)
     }
-
     fetchGreenHost()
   }, [])
 
@@ -49,8 +53,7 @@ const TabSection = ({ isValidated, handleValidation }) => {
     <Tabs defaultValue="tab-one">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="tab-one">
-          <Sprout className="mr-2 h-4 w-4" />{" "}
-          {copyText.popup.tabOne.buttonText}
+          <Sprout className="mr-2 h-4 w-4" /> {copyText.popup.tabOne.buttonText}
         </TabsTrigger>
         <TabsTrigger value="tab-two">
           <FileBarChart2 className="mr-2 h-4 w-4" />{" "}
@@ -62,11 +65,16 @@ const TabSection = ({ isValidated, handleValidation }) => {
       </TabsContent>
       <TabsContent value="tab-two" className="py-2">
         {isValidated ? (
-          <CarbonAnalysis />
-        ) : (
-          <LicenseForm
-            handleValidation={handleValidation}
+          <CarbonAnalysis
+            url={url}
+            greenHost={greenHost}
+            emissions={emissions}
+            setEmissions={setEmissions}
+            lighthouseDiagnostics={lighthouseDiagnostics}
+            setLighthouseDiagnostics={setLighthouseDiagnostics}
           />
+        ) : (
+          <LicenseForm handleValidation={handleValidation} />
         )}
       </TabsContent>
     </Tabs>

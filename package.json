@@ -27,6 +27,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.52.0",
+    "recharts": "^2.12.7",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.23.8"
@@ -51,6 +52,7 @@
     "host_permissions": [
       "https://*/*"
     ],
+    "key": "$CRX_KEY",
     "browser_specific_settings": {
       "gecko": {
         "id": "greenchecksupport@proton.me"
