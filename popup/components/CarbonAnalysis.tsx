@@ -12,7 +12,7 @@ import {
   CardTitle
 } from "~components/ui/card"
 
-const CarbonAnalysis = () => {
+const CarbonAnalysis = ({ websiteCarbonData }) => {
   const [loading, setLoading] = useState(false)
   const [lighthouseDiagnostics, setLighthouseDiagnostics] = useState(null)
   const [emissions, setEmissions] = useState(null)
@@ -50,42 +50,53 @@ const CarbonAnalysis = () => {
     }
   }
 
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-lg">{copyText.popup.tabTwo.buttonText}</CardTitle>
-        <CardDescription>
-          {copyText.popup.tabTwo.afterLicenseKeyEntry.description}
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        {!emissions ? (
-          <Button onClick={checkWebsite}>
-            {loading ? (
-              <>
-                <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />{" "}
-                Running...
-              </>
-            ) : (
-              "Test Website"
-            )}
-          </Button>
-        ) : (
-          <>
-            <p>
-              Page Size:{" "}
-              {JSON.stringify(
-                lighthouseDiagnostics &&
-                  Math.round(lighthouseDiagnostics.totalByteWeight / 1024)
-              )}{" "}
-              kB
-            </p>
-            <p>Carbon emitted per page load: {emissions.toFixed(2)}g</p>
-          </>
-        )}
-      </CardContent>
-    </Card>
-  )
+  if (websiteCarbonData)
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-lg">
+            {copyText.popup.tabTwo.buttonText}
+          </CardTitle>
+          <CardDescription>
+            {copyText.popup.tabTwo.afterLicenseKeyEntry.description}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {!emissions ? (
+            <Button onClick={checkWebsite}>
+              {loading ? (
+                <>
+                  <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />{" "}
+                  Running...
+                </>
+              ) : (
+                "Test Website"
+              )}
+            </Button>
+          ) : (
+            <>
+              <p>
+                Page Size:{" "}
+                {JSON.stringify(
+                  lighthouseDiagnostics &&
+                    Math.round(lighthouseDiagnostics.totalByteWeight / 1024)
+                )}{" "}
+                kB
+              </p>
+              <p>
+                Page Size:{" "}
+                {JSON.stringify(
+                  lighthouseDiagnostics &&
+                    Math.round(lighthouseDiagnostics.totalByteWeight / 1024)
+                )}{" "}
+                kB
+              </p>
+              <p>Carbon emitted per page load: {emissions.toFixed(2)}g</p>
+            </>
+          )}
+        </CardContent>
+      </Card>
+    )
 }
 
 export default CarbonAnalysis

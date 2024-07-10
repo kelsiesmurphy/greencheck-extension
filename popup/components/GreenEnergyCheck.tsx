@@ -10,7 +10,7 @@ import { Loader2Icon, Sprout, XCircle } from "lucide-react"
 
 import GreenCheckDropDown from "~components/green-check-dropdown"
 
-export default function GreenEnergyCheck({ loading, greenHost }) {
+export default function GreenEnergyCheck({ loading, greenWebFoundationData }) {
   return (
     <Card>
       <CardHeader>
@@ -25,33 +25,33 @@ export default function GreenEnergyCheck({ loading, greenHost }) {
             <Loader2Icon className="animate-spin" />
           </div>
         ) : (
-          greenHost && (
+          greenWebFoundationData && (
             <>
               <div
                 className={`rounded-lg p-4 flex gap-2 border ${
-                  greenHost.green
+                  greenWebFoundationData.green
                     ? "bg-emerald-50 border-emerald-200 text-emerald-700 dark:bg-emerald-700 dark:border-emerald-600 dark:text-emerald-200 dark:bg-opacity-50"
                     : "bg-red-50 border-red-200 text-red-700 dark:bg-red-700 dark:border-red-600 dark:text-red-200 dark:bg-opacity-50"
                 }`}>
                 <div className="pt-[2px]">
-                  {greenHost.green ? (
-                    <Sprout size={20}/>
+                  {greenWebFoundationData.green ? (
+                    <Sprout size={20} />
                   ) : (
-                    <XCircle size={20}/>
+                    <XCircle size={20} />
                   )}
                 </div>
                 <div className="max-w-64">
                   <h4 className="text-base font-medium">
-                    {greenHost.green ? "Good news!" : "Bad news"}
+                    {greenWebFoundationData.green ? "Good news!" : "Bad news"}
                   </h4>
                   <p className="text-sm">
-                    {greenHost.green ? (
+                    {greenWebFoundationData.green ? (
                       <>
                         This website is hosted by{" "}
                         <a
-                          href={greenHost.hosted_by_website}
+                          href={greenWebFoundationData.hosted_by_website}
                           className="hover:underline">
-                          {greenHost.hosted_by}
+                          {greenWebFoundationData.hosted_by}
                         </a>
                         , a provider committed to reducing its environmental
                         impact.
@@ -62,9 +62,9 @@ export default function GreenEnergyCheck({ loading, greenHost }) {
                   </p>
                 </div>
               </div>
-              {greenHost.green && (
+              {greenWebFoundationData.green && (
                 <GreenCheckDropDown
-                  result={greenHost}
+                  result={greenWebFoundationData}
                   text={"Supporting documentation"}
                 />
               )}

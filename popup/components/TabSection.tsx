@@ -6,12 +6,13 @@ import { FileBarChart2, Sprout } from "lucide-react"
 import { useEffect, useState } from "react"
 import Browser from "webextension-polyfill"
 
+import CarbonAnalysis from "./CarbonAnalysis"
 import GreenEnergyCheck from "./GreenEnergyCheck"
 import LicenseForm from "./LicenseForm"
-import CarbonAnalysis from "./CarbonAnalysis"
 
 const TabSection = ({ isValidated, handleValidation }) => {
-  const [greenHost, setGreenHost] = useState(null)
+  const [greenWebFoundationData, setGreenWebFoundationData] = useState(null)
+  const [websiteCarbonData, setWebsiteCarbonData] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -20,10 +21,15 @@ const TabSection = ({ isValidated, handleValidation }) => {
         active: true,
         currentWindow: true
       })
-      const usesGreenHost = await usesGreenHostCheck(tabs[0].url)
+      const greenWebFoundationResponse = await greenWebFoundationCheck(
+        tabs[0].url
+      )
+
+      const websiteCarbonResponse = await websiteCarbonCheck(tabs[0].url)
 
       setTimeout(() => {
-        setGreenHost(usesGreenHost)
+        setGreenWebFoundationData(greenWebFoundationResponse)
+        setWebsiteCarbonData(websiteCarbonResponse)
         setLoading(false)
       }, 1000)
     }
@@ -31,7 +37,22 @@ const TabSection = ({ isValidated, handleValidation }) => {
     fetchGreenHost()
   }, [])
 
-  async function usesGreenHostCheck(url: string) {
+  async function websiteCarbonCheck(url: string) {
+    try {
+      const hostname = new URL(url).hostname
+      const response = await fetch(
+        `https://api.websitecarbon.com/site?url=${hostname}`
+      )
+
+      const data = await response.json()
+      return data
+    } catch (error) {
+      console.error("Error checking green energy status:", error)
+      return null
+    }
+  }
+
+  async function greenWebFoundationCheck(url: string) {
     try {
       const hostname = new URL(url).hostname
       const response = await fetch(
@@ -49,8 +70,7 @@ const TabSection = ({ isValidated, handleValidation }) => {
     <Tabs defaultValue="tab-one">
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="tab-one">
-          <Sprout className="mr-2 h-4 w-4" />{" "}
-          {copyText.popup.tabOne.buttonText}
+          <Sprout className="mr-2 h-4 w-4" /> {copyText.popup.tabOne.buttonText}
         </TabsTrigger>
         <TabsTrigger value="tab-two">
           <FileBarChart2 className="mr-2 h-4 w-4" />{" "}
@@ -58,15 +78,13 @@ const TabSection = ({ isValidated, handleValidation }) => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="tab-one" className="py-2">
-        <GreenEnergyCheck loading={loading} greenHost={greenHost} />
+        <GreenEnergyCheck loading={loading} greenWebFoundationData={greenWebFoundationData} />
       </TabsContent>
       <TabsContent value="tab-two" className="py-2">
         {isValidated ? (
-          <CarbonAnalysis />
+          <CarbonAnalysis websiteCarbonData={websiteCarbonData} />
         ) : (
-          <LicenseForm
-            handleValidation={handleValidation}
-          />
+          <LicenseForm handleValidation={handleValidation} />
         )}
       </TabsContent>
     </Tabs>
