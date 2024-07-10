@@ -11,7 +11,13 @@ import GreenEnergyCheck from "./GreenEnergyCheck"
 import LicenseForm from "./LicenseForm"
 
 const TabSection = ({ isValidated, handleValidation }) => {
+<<<<<<< HEAD
   const [greenHost, setGreenHost] = useState(null)
+=======
+  const [url, setURL] = useState("")
+  const [greenWebFoundationData, setGreenWebFoundationData] = useState(null)
+  const [websiteCarbonData, setWebsiteCarbonData] = useState(null)
+>>>>>>> f4c0025 (Adding new api)
   const [loading, setLoading] = useState(true)
 
   const [lighthouseDiagnostics, setLighthouseDiagnostics] = useState(null)
@@ -23,7 +29,16 @@ const TabSection = ({ isValidated, handleValidation }) => {
         active: true,
         currentWindow: true
       })
+<<<<<<< HEAD
       const usesGreenHost = await usesGreenHostCheck(tabs[0].url)
+=======
+      setURL(tabs[0].url)
+      const greenWebFoundationResponse = await greenWebFoundationCheck(
+        tabs[0].url
+      )
+
+      const websiteCarbonResponse = await websiteCarbonCheck(tabs[0].url)
+>>>>>>> f4c0025 (Adding new api)
 
       setTimeout(() => {
         setGreenWebFoundationData(greenWebFoundationResponse)
@@ -63,6 +78,7 @@ const TabSection = ({ isValidated, handleValidation }) => {
       return null
     }
   }
+
   return (
     <Tabs defaultValue="tab-one">
       <TabsList className="grid w-full grid-cols-2">
@@ -75,11 +91,30 @@ const TabSection = ({ isValidated, handleValidation }) => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="tab-one" className="py-2">
+<<<<<<< HEAD
         <GreenEnergyCheck loading={loading} greenWebFoundationData={greenWebFoundationData} />
       </TabsContent>
       <TabsContent value="tab-two" className="py-2">
         {isValidated ? (
           <CarbonAnalysis />
+=======
+        <GreenEnergyCheck
+          loading={loading}
+          greenWebFoundationData={greenWebFoundationData}
+        />
+      </TabsContent>
+      <TabsContent value="tab-two" className="py-2">
+        {isValidated ? (
+          <CarbonAnalysis
+            url={url}
+            greenWebFoundationData={greenWebFoundationData}
+            websiteCarbonData={websiteCarbonData}
+            emissions={emissions}
+            setEmissions={setEmissions}
+            lighthouseDiagnostics={lighthouseDiagnostics}
+            setLighthouseDiagnostics={setLighthouseDiagnostics}
+          />
+>>>>>>> f4c0025 (Adding new api)
         ) : (
           <LicenseForm handleValidation={handleValidation} />
         )}

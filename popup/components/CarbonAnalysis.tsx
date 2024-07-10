@@ -17,7 +17,8 @@ import { CarbonChart } from "./CarbonChart"
 
 const CarbonAnalysis = ({
   url,
-  greenHost,
+  greenWebFoundationData,
+  websiteCarbonData,
   emissions,
   setEmissions,
   lighthouseDiagnostics,
@@ -50,7 +51,7 @@ const CarbonAnalysis = ({
       const swd = new co2({ model: "swd" })
       const carbonResult = await swd.perByte(
         pageSizeInBytes.totalByteWeight,
-        greenHost.green
+        greenWebFoundationData.green
       )
       setEmissions(carbonResult)
     } catch (error) {
