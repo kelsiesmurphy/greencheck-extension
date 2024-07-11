@@ -11,14 +11,12 @@ import GreenEnergyCheck from "./GreenEnergyCheck"
 import LicenseForm from "./LicenseForm"
 
 const TabSection = ({ isValidated, handleValidation }) => {
-  const [greenHost, setGreenHost] = useState(null)
   const [url, setURL] = useState("")
   const [greenWebFoundationData, setGreenWebFoundationData] = useState(null)
   const [websiteCarbonData, setWebsiteCarbonData] = useState(null)
   const [loading, setLoading] = useState(true)
 
   const [lighthouseDiagnostics, setLighthouseDiagnostics] = useState(null)
-  const [emissions, setEmissions] = useState(null)
 
   useEffect(() => {
     async function fetchGreenHost() {
@@ -31,31 +29,13 @@ const TabSection = ({ isValidated, handleValidation }) => {
         tabs[0].url
       )
 
-      const websiteCarbonResponse = await websiteCarbonCheck(tabs[0].url)
-
       setTimeout(() => {
         setGreenWebFoundationData(greenWebFoundationResponse)
-        setWebsiteCarbonData(websiteCarbonResponse)
         setLoading(false)
-      }, 1000)
+      }, 500)
     }
     fetchGreenHost()
   }, [])
-
-  async function websiteCarbonCheck(url: string) {
-    try {
-      const hostname = new URL(url).hostname
-      const response = await fetch(
-        `https://api.websitecarbon.com/site?url=${hostname}`
-      )
-
-      const data = await response.json()
-      return data
-    } catch (error) {
-      console.error("Error checking green energy status:", error)
-      return null
-    }
-  }
 
   async function greenWebFoundationCheck(url: string) {
     try {
@@ -84,7 +64,10 @@ const TabSection = ({ isValidated, handleValidation }) => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="tab-one" className="py-2">
-        <GreenEnergyCheck loading={loading} greenWebFoundationData={greenWebFoundationData} />
+        <GreenEnergyCheck
+          loading={loading}
+          greenWebFoundationData={greenWebFoundationData}
+        />
       </TabsContent>
       <TabsContent value="tab-two" className="py-2">
         {isValidated ? (
@@ -92,10 +75,7 @@ const TabSection = ({ isValidated, handleValidation }) => {
             url={url}
             greenWebFoundationData={greenWebFoundationData}
             websiteCarbonData={websiteCarbonData}
-            emissions={emissions}
-            setEmissions={setEmissions}
-            lighthouseDiagnostics={lighthouseDiagnostics}
-            setLighthouseDiagnostics={setLighthouseDiagnostics}
+            setWebsiteCarbonData={setWebsiteCarbonData}
           />
         ) : (
           <LicenseForm handleValidation={handleValidation} />

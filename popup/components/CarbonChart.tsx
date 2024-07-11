@@ -1,53 +1,82 @@
 "use client"
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
+import {
+  Label,
+  PolarGrid,
+  PolarRadiusAxis,
+  RadialBar,
+  RadialBarChart
+} from "recharts"
 
 import {
   ChartContainer,
-  ChartLegend,
-  ChartLegendContent,
   ChartTooltip,
-  ChartTooltipContent,
   type ChartConfig
 } from "~components/ui/chart"
 
-const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 }
-]
+import CustomChartTooltip from "./CustomChartTooltip"
 
-const chartConfig = {
-  desktop: {
-    label: "Desktop",
-    color: "hsl(var(--chart-3))"
-  },
-  mobile: {
-    label: "Mobile",
-    color: "hsl(var(--chart-5))"
-  }
-} satisfies ChartConfig
+export function CarbonChart({ websiteCarbonData }) {
+  const chartData = [
+    {
+      cleanerThan: websiteCarbonData.cleanerThan,
+      fill: "hsl(var(--chart-2))"
+    }
+  ]
 
-export function CarbonChart() {
+  const chartConfig = {
+    cleanerThan: {
+      label: "cleanerThan"
+    }
+  } satisfies ChartConfig
+
   return (
-    <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-      <BarChart accessibilityLayer data={chartData}>
-        <CartesianGrid vertical={false} />
-        <XAxis
-          dataKey="month"
-          tickLine={false}
-          tickMargin={10}
-          axisLine={false}
-          tickFormatter={(value) => value.slice(0, 3)}
+    <ChartContainer
+      config={chartConfig}
+      className="mx-auto aspect-square max-h-[250px]">
+      <RadialBarChart
+        data={chartData}
+        endAngle={chartData[0].cleanerThan * 360}
+        innerRadius={80}
+        outerRadius={140}>
+        <PolarGrid
+          gridType="circle"
+          radialLines={false}
+          stroke="none"
+          className="first:fill-muted last:fill-background"
+          polarRadius={[86, 74]}
         />
-        <ChartTooltip content={<ChartTooltipContent />} />
-        <ChartLegend content={<ChartLegendContent />} />
-        <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-        <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
-      </BarChart>
+        <RadialBar dataKey="cleanerThan" background />
+        <ChartTooltip content={<CustomChartTooltip />} />
+        <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
+          <Label
+            content={({ viewBox }) => {
+              if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                return (
+                  <text
+                    x={viewBox.cx}
+                    y={viewBox.cy}
+                    textAnchor="middle"
+                    dominantBaseline="middle">
+                    <tspan
+                      x={viewBox.cx}
+                      y={viewBox.cy}
+                      className="fill-foreground text-4xl font-bold">
+                      {websiteCarbonData.rating}
+                    </tspan>
+                    <tspan
+                      x={viewBox.cx}
+                      y={(viewBox.cy || 0) + 24}
+                      className="fill-muted-foreground">
+                      Ranking
+                    </tspan>
+                  </text>
+                )
+              }
+            }}
+          />
+        </PolarRadiusAxis>
+      </RadialBarChart>
     </ChartContainer>
   )
 }
