@@ -18,7 +18,6 @@ const TabSection = ({ isValidated, handleValidation }) => {
 
   const [lighthouseDiagnostics, setLighthouseDiagnostics] = useState(null)
 
-
   useEffect(() => {
     async function fetchGreenHost() {
       const tabs = await Browser.tabs.query({
@@ -74,7 +73,6 @@ const TabSection = ({ isValidated, handleValidation }) => {
         {isValidated ? (
           <CarbonAnalysis
             url={url}
-            greenWebFoundationData={greenWebFoundationData}
             websiteCarbonData={websiteCarbonData}
             setWebsiteCarbonData={setWebsiteCarbonData}
           />

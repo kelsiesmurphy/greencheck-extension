@@ -13,7 +13,6 @@ import {
 import { formatBytes } from "~lib/utils"
 
 import { CarbonChart } from "./CarbonChart"
-
 import StatsCard from "./StatsCard"
 
 const CarbonAnalysis = ({ url, setWebsiteCarbonData, websiteCarbonData }) => {

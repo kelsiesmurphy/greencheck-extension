@@ -47,7 +47,11 @@ export function CarbonChart({ websiteCarbonData }) {
           polarRadius={[86, 74]}
         />
         <RadialBar dataKey="cleanerThan" background />
-        <ChartTooltip content={<CustomChartTooltip cleanerThan={chartData[0].cleanerThan * 100} />} />
+        <ChartTooltip
+          content={
+            <CustomChartTooltip cleanerThan={chartData[0].cleanerThan * 100} />
+          }
+        />
         <PolarRadiusAxis tick={false} tickLine={false} axisLine={false}>
           <Label
             content={({ viewBox }) => {
