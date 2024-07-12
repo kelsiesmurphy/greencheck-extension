@@ -13,6 +13,7 @@ import {
 import { formatBytes } from "~lib/utils"
 
 import { CarbonChart } from "./CarbonChart"
+
 import StatsCard from "./StatsCard"
 
 const CarbonAnalysis = ({ url, setWebsiteCarbonData, websiteCarbonData }) => {
@@ -38,7 +39,6 @@ const CarbonAnalysis = ({ url, setWebsiteCarbonData, websiteCarbonData }) => {
     setLoading(true)
     try {
       const websiteCarbonResponse = await websiteCarbonCheck(url)
-      console.log(websiteCarbonResponse)
 
       setWebsiteCarbonData(websiteCarbonResponse)
     } catch (error) {

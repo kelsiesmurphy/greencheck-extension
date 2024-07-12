@@ -18,6 +18,7 @@ const TabSection = ({ isValidated, handleValidation }) => {
 
   const [lighthouseDiagnostics, setLighthouseDiagnostics] = useState(null)
 
+
   useEffect(() => {
     async function fetchGreenHost() {
       const tabs = await Browser.tabs.query({
