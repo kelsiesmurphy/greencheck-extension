@@ -1,6 +1,5 @@
-import { co2 } from "@tgwf/co2"
 import copyText from "copy.json"
-import { Loader2Icon, LoaderCircle } from "lucide-react"
+import { Cloud, LoaderCircle, Scale, Zap } from "lucide-react"
 import React, { useState } from "react"
 
 import { Button } from "~components/ui/button"
@@ -14,13 +13,9 @@ import {
 import { formatBytes } from "~lib/utils"
 
 import { CarbonChart } from "./CarbonChart"
+import StatsCard from "./StatsCard"
 
-const CarbonAnalysis = ({
-  url,
-  setWebsiteCarbonData,
-  greenWebFoundationData,
-  websiteCarbonData
-}) => {
+const CarbonAnalysis = ({ url, setWebsiteCarbonData, websiteCarbonData }) => {
   const [loading, setLoading] = useState(false)
 
   async function websiteCarbonCheck(url: string) {
@@ -64,26 +59,55 @@ const CarbonAnalysis = ({
         </CardDescription>
       </CardHeader>
       <CardContent>
-          <>
-            {!websiteCarbonData ? (
-              <Button onClick={checkWebsite}>
-                {loading ? (
-                  <>
-                    <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />{" "}
-                    Running...
-                  </>
-                ) : (
-                  <>Test Website</>
-                )}
-              </Button>
-            ) : (
-              <>
-                <CarbonChart websiteCarbonData={websiteCarbonData} />
-                <p>Page tested: {websiteCarbonData.url}</p>
-                <p>Page Size: {formatBytes(websiteCarbonData.bytes)}</p>
-              </>
-            )}
-          </>
+        <>
+          {!websiteCarbonData ? (
+            <Button onClick={checkWebsite}>
+              {loading ? (
+                <>
+                  <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />{" "}
+                  Running...
+                </>
+              ) : (
+                <>Test Website</>
+              )}
+            </Button>
+          ) : (
+            <div className="space-y-4">
+              <CarbonChart websiteCarbonData={websiteCarbonData} />
+              <StatsCard
+                title="CO2"
+                icon={<Cloud color="hsl(var(--muted-foreground))" size={20} />}
+                number={`${websiteCarbonData.green ? websiteCarbonData.statistics.co2.renewable.grams.toPrecision(2) : websiteCarbonData.statistics.co2.grid.grams.toPrecision(2)} g`}
+                description="The approximate amount of CO2 in grams transferred on each page load."
+              />
+              <StatsCard
+                title="Energy"
+                icon={<Zap color="hsl(var(--muted-foreground))" size={20} />}
+                number={
+                  websiteCarbonData.statistics.energy.toPrecision(2) + " KWg"
+                }
+                description="The approximate amount of energy transferred on each page load in KWg."
+              />
+              <StatsCard
+                title="Page Size"
+                icon={<Scale color="hsl(var(--muted-foreground))" size={20} />}
+                number={formatBytes(websiteCarbonData.statistics.adjustedBytes)}
+                description="The approximate number of bytes transferred by the page load, adjusted for first-time vs. returning visitor percentages."
+              />
+              <div className="flex justify-center">
+                <p>
+                  Page tested:{" "}
+                  <a
+                    className="hover:underline"
+                    href={websiteCarbonData.url}
+                    target="_blank">
+                    {websiteCarbonData.url}
+                  </a>
+                </p>
+              </div>
+            </div>
+          )}
+        </>
       </CardContent>
     </Card>
   )
