@@ -1,6 +1,5 @@
-import { co2 } from "@tgwf/co2"
 import copyText from "copy.json"
-import { LoaderCircle } from "lucide-react"
+import { Cloud, LoaderCircle, Scale, Zap } from "lucide-react"
 import React, { useState } from "react"
 
 import { Button } from "~components/ui/button"
@@ -11,47 +10,37 @@ import {
   CardHeader,
   CardTitle
 } from "~components/ui/card"
+import { formatBytes } from "~lib/utils"
 
 import { CarbonChart } from "./CarbonChart"
 
-const CarbonAnalysis = ({
-  url,
-  greenHost,
-  emissions,
-  setEmissions,
-  lighthouseDiagnostics,
-  setLighthouseDiagnostics
-}) => {
+import StatsCard from "./StatsCard"
+
+const CarbonAnalysis = ({ url, setWebsiteCarbonData, websiteCarbonData }) => {
   const [loading, setLoading] = useState(false)
 
-  const getLighthouseReport = async () => {
+  async function websiteCarbonCheck(url: string) {
     try {
-      const res = await fetch(
-        `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${url}&key=${process.env.PLASMO_PUBLIC_GOOGLE_CLOUD_KEY}`
-      )
-      const data = await res.json()
-      setLighthouseDiagnostics(
-        data.lighthouseResult.audits.diagnostics.details.items[0]
+      const hostname = new URL(url).hostname
+      const response = await fetch(
+        `https://api.websitecarbon.com/site?url=${hostname}`
       )
 
-      return data.lighthouseResult.audits.diagnostics.details.items[0]
-    } catch (err) {
-      console.log(err)
-      throw err
+      const data = await response.json()
+      setWebsiteCarbonData(data)
+      return data
+    } catch (error) {
+      console.error("Error checking green energy status:", error)
+      return null
     }
   }
 
   async function checkWebsite() {
     setLoading(true)
     try {
-      const pageSizeInBytes = await getLighthouseReport()
+      const websiteCarbonResponse = await websiteCarbonCheck(url)
 
-      const swd = new co2({ model: "swd" })
-      const carbonResult = await swd.perByte(
-        pageSizeInBytes.totalByteWeight,
-        greenHost.green
-      )
-      setEmissions(carbonResult)
+      setWebsiteCarbonData(websiteCarbonResponse)
     } catch (error) {
       console.error("Error checking website:", error)
     } finally {
@@ -70,31 +59,55 @@ const CarbonAnalysis = ({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        {!emissions ? (
-          <Button onClick={checkWebsite}>
-            {loading ? (
-              <>
-                <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />{" "}
-                Running...
-              </>
-            ) : (
-              "Test Website"
-            )}
-          </Button>
-        ) : (
-          <>
-            <CarbonChart />
-            <p>
-              Page Size:{" "}
-              {JSON.stringify(
-                lighthouseDiagnostics &&
-                  Math.round(lighthouseDiagnostics.totalByteWeight / 1024)
-              )}{" "}
-              kB
-            </p>
-            <p>Carbon emitted per page load: {emissions.toFixed(2)}g</p>
-          </>
-        )}
+        <>
+          {!websiteCarbonData ? (
+            <Button onClick={checkWebsite}>
+              {loading ? (
+                <>
+                  <LoaderCircle className="mr-2 h-4 w-4 animate-spin" />{" "}
+                  Running...
+                </>
+              ) : (
+                <>Test Website</>
+              )}
+            </Button>
+          ) : (
+            <div className="space-y-4">
+              <CarbonChart websiteCarbonData={websiteCarbonData} />
+              <StatsCard
+                title="CO2"
+                icon={<Cloud color="hsl(var(--muted-foreground))" size={20} />}
+                number={`${websiteCarbonData.green ? websiteCarbonData.statistics.co2.renewable.grams.toPrecision(2) : websiteCarbonData.statistics.co2.grid.grams.toPrecision(2)} g`}
+                description="The approximate amount of CO2 in grams transferred on each page load."
+              />
+              <StatsCard
+                title="Energy"
+                icon={<Zap color="hsl(var(--muted-foreground))" size={20} />}
+                number={
+                  websiteCarbonData.statistics.energy.toPrecision(2) + " KWg"
+                }
+                description="The approximate amount of energy transferred on each page load in KWg."
+              />
+              <StatsCard
+                title="Page Size"
+                icon={<Scale color="hsl(var(--muted-foreground))" size={20} />}
+                number={formatBytes(websiteCarbonData.statistics.adjustedBytes)}
+                description="The approximate number of bytes transferred by the page load, adjusted for first-time vs. returning visitor percentages."
+              />
+              <div className="flex justify-center">
+                <p>
+                  Page tested:{" "}
+                  <a
+                    className="hover:underline"
+                    href={websiteCarbonData.url}
+                    target="_blank">
+                    {websiteCarbonData.url}
+                  </a>
+                </p>
+              </div>
+            </div>
+          )}
+        </>
       </CardContent>
     </Card>
   )

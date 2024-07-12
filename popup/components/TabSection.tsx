@@ -11,12 +11,13 @@ import GreenEnergyCheck from "./GreenEnergyCheck"
 import LicenseForm from "./LicenseForm"
 
 const TabSection = ({ isValidated, handleValidation }) => {
-  const [greenHost, setGreenHost] = useState(null)
-  const [url, setURL] = useState(null)
+  const [url, setURL] = useState("")
+  const [greenWebFoundationData, setGreenWebFoundationData] = useState(null)
+  const [websiteCarbonData, setWebsiteCarbonData] = useState(null)
   const [loading, setLoading] = useState(true)
 
   const [lighthouseDiagnostics, setLighthouseDiagnostics] = useState(null)
-  const [emissions, setEmissions] = useState(null)
+
 
   useEffect(() => {
     async function fetchGreenHost() {
@@ -25,17 +26,19 @@ const TabSection = ({ isValidated, handleValidation }) => {
         currentWindow: true
       })
       setURL(tabs[0].url)
-      const usesGreenHost = await usesGreenHostCheck(tabs[0].url)
+      const greenWebFoundationResponse = await greenWebFoundationCheck(
+        tabs[0].url
+      )
 
       setTimeout(() => {
-        setGreenHost(usesGreenHost)
+        setGreenWebFoundationData(greenWebFoundationResponse)
         setLoading(false)
-      }, 1000)
+      }, 500)
     }
     fetchGreenHost()
   }, [])
 
-  async function usesGreenHostCheck(url: string) {
+  async function greenWebFoundationCheck(url: string) {
     try {
       const hostname = new URL(url).hostname
       const response = await fetch(
@@ -49,6 +52,7 @@ const TabSection = ({ isValidated, handleValidation }) => {
       return null
     }
   }
+
   return (
     <Tabs defaultValue="tab-one">
       <TabsList className="grid w-full grid-cols-2">
@@ -61,17 +65,18 @@ const TabSection = ({ isValidated, handleValidation }) => {
         </TabsTrigger>
       </TabsList>
       <TabsContent value="tab-one" className="py-2">
-        <GreenEnergyCheck loading={loading} greenHost={greenHost} />
+        <GreenEnergyCheck
+          loading={loading}
+          greenWebFoundationData={greenWebFoundationData}
+        />
       </TabsContent>
       <TabsContent value="tab-two" className="py-2">
         {isValidated ? (
           <CarbonAnalysis
             url={url}
-            greenHost={greenHost}
-            emissions={emissions}
-            setEmissions={setEmissions}
-            lighthouseDiagnostics={lighthouseDiagnostics}
-            setLighthouseDiagnostics={setLighthouseDiagnostics}
+            greenWebFoundationData={greenWebFoundationData}
+            websiteCarbonData={websiteCarbonData}
+            setWebsiteCarbonData={setWebsiteCarbonData}
           />
         ) : (
           <LicenseForm handleValidation={handleValidation} />
