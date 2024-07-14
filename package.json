@@ -1,7 +1,7 @@
 {
   "name": "greencheck",
   "displayName": "Greencheck",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "GreenCheck tells you at a glance which websites are hosted using green energy straight from your search results.",
   "author": "Kelsie Murphy",
   "scripts": {
