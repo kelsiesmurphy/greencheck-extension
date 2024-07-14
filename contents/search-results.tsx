@@ -39,7 +39,7 @@ export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () =>
 
 export const getShadowHostId = () => "greencheck-unique-id"
 
-const SearchResults: FC<PlasmoCSUIProps> = ({ anchor }) => {
+const SearchResults: FC<PlasmoCSUIProps> = ({ anchor }: { anchor: any }) => {
   const [result, setResult] = useState(null)
   const [checked, setChecked] = useState(false)
   const url = anchor.element.href
@@ -66,13 +66,21 @@ const SearchResults: FC<PlasmoCSUIProps> = ({ anchor }) => {
             block.setAttribute("title", `Hosted by: ${result.hosted_by}`)
           }
         } else {
-          block.textContent = block.textContent.replace("⏳", "")
+          block.textContent = block.textContent.replace("⏳ ", "")
         }
       }
     }
   }, [checked, result, anchor.element])
 
-  if (result && result.green) return <GreenCheckDropDown result={result} text={"This website is hosted by a provider committed to reducing its environmental impact."} />
+  if (result && result.green)
+    return (
+      <GreenCheckDropDown
+        result={result}
+        text={
+          "This website is hosted by a provider committed to reducing its environmental impact."
+        }
+      />
+    )
 
   return null
 }
