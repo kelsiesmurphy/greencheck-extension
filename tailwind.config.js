@@ -7,10 +7,7 @@ module.exports = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-    './assets/**/*.{ts,tsx}',
-    './popup/**/*.{ts,tsx}',
-    './contents/**/*.{ts,tsx}',
-    './options/**/*.{ts,tsx}',
+    './assets/**/*.{ts,tsx}'
   ],
   prefix: "",
   theme: {

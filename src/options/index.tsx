@@ -4,7 +4,6 @@ import HeaderOptions from "./HeaderOptions"
 
 import "../style.css"
 
-import { ModeToggle } from "~components/mode-toggle"
 import { Button } from "~components/ui/button"
 
 function OptionsIndex() {

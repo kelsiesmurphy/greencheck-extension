@@ -1,14 +1,15 @@
+import { Loader2Icon, Sprout, XCircle } from "lucide-react"
+
+import GreenCheckDropDown from "~components/green-check-dropdown"
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle
-} from "components/ui/card"
-import copyText from "copy.json"
-import { Loader2Icon, Sprout, XCircle } from "lucide-react"
+} from "~components/ui/card"
 
-import GreenCheckDropDown from "~components/green-check-dropdown"
+import copyText from "../../copy.json"
 
 export default function GreenEnergyCheck({ loading, greenWebFoundationData }) {
   return (
