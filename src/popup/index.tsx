@@ -1,4 +1,4 @@
-import { ThemeProvider } from "components/theme-provider"
+import { ThemeProvider } from "~components/theme-provider"
 import { useEffect, useState } from "react"
 
 import HeaderSection from "./components/HeaderSection"

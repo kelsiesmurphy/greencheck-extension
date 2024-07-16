@@ -1,7 +1,7 @@
 "use client"
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "components/ui/tabs"
-import copyText from "copy.json"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~components/ui/tabs"
+import copyText from "../../copy.json"
 import { FileBarChart2, Sprout } from "lucide-react"
 import { useEffect, useState } from "react"
 import Browser from "webextension-polyfill"

@@ -1,4 +1,4 @@
-import copyText from "copy.json"
+import copyText from "../../copy.json"
 import { Cloud, LoaderCircle, Scale, Zap } from "lucide-react"
 import React, { useState } from "react"
 
