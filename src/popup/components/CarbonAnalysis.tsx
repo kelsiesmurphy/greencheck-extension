@@ -1,4 +1,3 @@
-import copyText from "../../copy.json"
 import { Cloud, LoaderCircle, Scale, Zap } from "lucide-react"
 import React, { useState } from "react"
 
@@ -12,7 +11,9 @@ import {
 } from "~components/ui/card"
 import { formatBytes } from "~lib/utils"
 
+import copyText from "../../copy.json"
 import { CarbonChart } from "./CarbonChart"
+import { IntensityChart } from "./IntensityChart"
 import StatsCard from "./StatsCard"
 
 const CarbonAnalysis = ({ url, setWebsiteCarbonData, websiteCarbonData }) => {
@@ -72,6 +73,7 @@ const CarbonAnalysis = ({ url, setWebsiteCarbonData, websiteCarbonData }) => {
             </Button>
           ) : (
             <div className="space-y-4">
+              {/* <IntensityChart /> */}
               <CarbonChart websiteCarbonData={websiteCarbonData} />
               <StatsCard
                 title="CO2"
