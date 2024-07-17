@@ -21,7 +21,7 @@ export const getInlineAnchor: PlasmoGetInlineAnchor = () =>
 
 export const getShadowHostId = () => "greencheck-footer-unique-id"
 
-const CarbonFooter = ({ anchor }: { anchor: any }) => {
+const CarbonFooter = () => {
   const [hidden, setHidden] = useState(false)
   const [websiteCarbonData, setWebsiteCarbonData] = useState(null)
 
@@ -29,7 +29,7 @@ const CarbonFooter = ({ anchor }: { anchor: any }) => {
     const resp = await sendToBackground({
       name: "carbon_check",
       body: {
-        url: "https://api.websitecarbon.com"
+        url: location.href
       }
     })
 
