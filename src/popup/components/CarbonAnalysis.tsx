@@ -1,6 +1,8 @@
 import { Cloud, LoaderCircle, Scale, Zap } from "lucide-react"
 import React, { useState } from "react"
 
+import { sendToBackground } from "@plasmohq/messaging"
+
 import { Button } from "~components/ui/button"
 import {
   Card,
@@ -13,32 +15,27 @@ import { formatBytes } from "~lib/utils"
 
 import copyText from "../../copy.json"
 import { CarbonChart } from "./CarbonChart"
-import { IntensityChart } from "./IntensityChart"
+// import { IntensityChart } from "./IntensityChart"
 import StatsCard from "./StatsCard"
 
 const CarbonAnalysis = ({ url, setWebsiteCarbonData, websiteCarbonData }) => {
   const [loading, setLoading] = useState(false)
 
-  async function websiteCarbonCheck(url: string) {
-    try {
-      const hostname = new URL(url).hostname
-      const response = await fetch(
-        `https://api.websitecarbon.com/site?url=${hostname}`
-      )
+  const backgroundWebsiteCarbonCheck = async (url: string) => {
+    const resp = await sendToBackground({
+      name: "carbon_check",
+      body: {
+        url: url
+      }
+    })
 
-      const data = await response.json()
-      setWebsiteCarbonData(data)
-      return data
-    } catch (error) {
-      console.error("Error checking green energy status:", error)
-      return null
-    }
+    return resp.message
   }
 
   async function checkWebsite() {
     setLoading(true)
     try {
-      const websiteCarbonResponse = await websiteCarbonCheck(url)
+      const websiteCarbonResponse = await backgroundWebsiteCarbonCheck(url)
 
       setWebsiteCarbonData(websiteCarbonResponse)
     } catch (error) {

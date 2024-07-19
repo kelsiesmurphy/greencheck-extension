@@ -17,7 +17,7 @@ export const getStyle = () => {
 }
 
 export const getInlineAnchor: PlasmoGetInlineAnchor = () =>
-  document.querySelector(`footer`)
+  document.querySelector(`body > footer`)
 
 export const getShadowHostId = () => "greencheck-footer-unique-id"
 

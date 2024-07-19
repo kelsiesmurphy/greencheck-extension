@@ -7,6 +7,8 @@ import type {
 import type { FC } from "react"
 import { useEffect, useState } from "react"
 
+import { sendToBackground } from "@plasmohq/messaging"
+
 import GreenCheckDropDown from "~components/green-check-dropdown"
 
 export const config: PlasmoCSConfig = {
@@ -19,19 +21,15 @@ export const getStyle = () => {
   return style
 }
 
-async function apiCheck(url) {
-  try {
-    const hostname = new URL(url).hostname
-    const response = await fetch(
-      `https://api.thegreenwebfoundation.org/api/v3/greencheck/${hostname}`
-    )
+const backgroundWebsiteCarbonCheck = async (url: string) => {
+  const resp = await sendToBackground({
+    name: "gwf_check",
+    body: {
+      url: url
+    }
+  })
 
-    const data = await response.json()
-    return data
-  } catch (error) {
-    console.error("Error checking green energy status:", error)
-    return null
-  }
+  return resp.message
 }
 
 export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () =>
@@ -45,7 +43,7 @@ const SearchResults: FC<PlasmoCSUIProps> = ({ anchor }: { anchor: any }) => {
   const url = anchor.element.href
 
   useEffect(() => {
-    apiCheck(url).then((result) => {
+    backgroundWebsiteCarbonCheck(url).then((result) => {
       setResult(result)
       setChecked(true)
     })

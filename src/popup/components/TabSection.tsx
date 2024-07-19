@@ -1,11 +1,14 @@
 "use client"
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~components/ui/tabs"
-import copyText from "../../copy.json"
 import { FileBarChart2, Sprout } from "lucide-react"
 import { useEffect, useState } from "react"
 import Browser from "webextension-polyfill"
 
+import { sendToBackground } from "@plasmohq/messaging"
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "~components/ui/tabs"
+
+import copyText from "../../copy.json"
 import CarbonAnalysis from "./CarbonAnalysis"
 import GreenEnergyCheck from "./GreenEnergyCheck"
 import LicenseForm from "./LicenseForm"
@@ -16,8 +19,16 @@ const TabSection = ({ isValidated, handleValidation }) => {
   const [websiteCarbonData, setWebsiteCarbonData] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  const [lighthouseDiagnostics, setLighthouseDiagnostics] = useState(null)
+  const backgroundWebsiteCarbonCheck = async (url: string) => {
+    const resp = await sendToBackground({
+      name: "gwf_check",
+      body: {
+        url: url
+      }
+    })
 
+    return resp.message
+  }
   useEffect(() => {
     async function fetchGreenHost() {
       const tabs = await Browser.tabs.query({
@@ -25,7 +36,7 @@ const TabSection = ({ isValidated, handleValidation }) => {
         currentWindow: true
       })
       setURL(tabs[0].url)
-      const greenWebFoundationResponse = await greenWebFoundationCheck(
+      const greenWebFoundationResponse = await backgroundWebsiteCarbonCheck(
         tabs[0].url
       )
 
@@ -36,21 +47,6 @@ const TabSection = ({ isValidated, handleValidation }) => {
     }
     fetchGreenHost()
   }, [])
-
-  async function greenWebFoundationCheck(url: string) {
-    try {
-      const hostname = new URL(url).hostname
-      const response = await fetch(
-        `https://api.thegreenwebfoundation.org/api/v3/greencheck/${hostname}`
-      )
-
-      const data = await response.json()
-      return data
-    } catch (error) {
-      console.error("Error checking green energy status:", error)
-      return null
-    }
-  }
 
   return (
     <Tabs defaultValue="tab-one">
