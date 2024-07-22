@@ -43,7 +43,7 @@ export default function GreenEnergyCheck({ loading, greenWebFoundationData }) {
                 </div>
                 <div className="max-w-64">
                   <h4 className="text-base font-medium">
-                    {greenWebFoundationData.green ? "Good news!" : "Bad news"}
+                    {greenWebFoundationData.green ? "This website is green!" : "This website might not be green."}
                   </h4>
                   <p className="text-sm">
                     {greenWebFoundationData.green ? (
@@ -58,7 +58,7 @@ export default function GreenEnergyCheck({ loading, greenWebFoundationData }) {
                         impact.
                       </>
                     ) : (
-                      <>This website is not hosted on green energy</>
+                      <>It is unknown if this website runs on green energy, as the website host is not verified with <a href="https://www.thegreenwebfoundation.org/" className="underline">the Green Web Foundation</a>.</>
                     )}
                   </p>
                 </div>
