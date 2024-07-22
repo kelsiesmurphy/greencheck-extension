@@ -1,14 +1,14 @@
-import { Settings2 } from "lucide-react"
+// import { Settings2 } from "lucide-react"
 
 import Logo from "~components/logo"
 import { ModeToggle } from "~components/mode-toggle"
-import { Button } from "~components/ui/button"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger
-} from "~components/ui/tooltip"
+// import { Button } from "~components/ui/button"
+// import {
+//   Tooltip,
+//   TooltipContent,
+//   TooltipProvider,
+//   TooltipTrigger
+// } from "~components/ui/tooltip"
 
 const HeaderSection = () => {
   return (
@@ -17,7 +17,7 @@ const HeaderSection = () => {
         <Logo />
       </a>
       <div className="flex gap-1">
-        <TooltipProvider>
+        {/* <TooltipProvider>
           <Tooltip>
             <TooltipTrigger>
               <Button
@@ -36,7 +36,7 @@ const HeaderSection = () => {
               <p>Options</p>
             </TooltipContent>
           </Tooltip>
-        </TooltipProvider>
+        </TooltipProvider> */}
         <ModeToggle />
       </div>
     </div>
