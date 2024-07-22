@@ -7,7 +7,8 @@
   "scripts": {
     "dev": "plasmo dev",
     "build": "plasmo build",
-    "package": "plasmo package"
+    "package": "plasmo package",
+    "build-all": "pnpm plasmo build --target=firefox/mv3 --zip && pnpm plasmo build --target=chrome/mv3 --zip && pnpm plasmo build --target=edge/mv3 --zip"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -54,7 +55,6 @@
     "host_permissions": [
       "https://*/*"
     ],
-    "key": "$CRX_KEY",
     "browser_specific_settings": {
       "gecko": {
         "id": "greenchecksupport@proton.me"
@@ -67,9 +67,6 @@
         ],
         "matches": [
           "<all_urls>"
-        ],
-        "extension_ids": [
-          "$PLASMO_PUBLIC_CRX_ID"
         ]
       }
     ]
