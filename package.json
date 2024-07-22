@@ -1,7 +1,7 @@
 {
   "name": "greencheck",
   "displayName": "Greencheck",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "GreenCheck tells you at a glance which websites are hosted using green energy straight from your search results.",
   "author": "Kelsie Murphy",
   "scripts": {
@@ -54,7 +54,6 @@
     "host_permissions": [
       "https://*/*"
     ],
-    "key": "$CRX_KEY",
     "browser_specific_settings": {
       "gecko": {
         "id": "greenchecksupport@proton.me"
@@ -67,9 +66,6 @@
         ],
         "matches": [
           "<all_urls>"
-        ],
-        "extension_ids": [
-          "$PLASMO_PUBLIC_CRX_ID"
         ]
       }
     ]
