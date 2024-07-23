@@ -1,8 +1,8 @@
 {
   "name": "greencheck",
   "displayName": "GreenCheck",
-  "version": "0.0.7",
-  "description": "GreenCheck tells you at a glance which websites are hosted using green energy straight from your search results.",
+  "version": "0.0.8",
+  "description": "GreenCheck is a browser extension that identifies websites powered by green energy, and offers detailed analysis on the site’s carbon emissions.",
   "author": "GreenCheck",
   "scripts": {
     "dev": "plasmo dev",

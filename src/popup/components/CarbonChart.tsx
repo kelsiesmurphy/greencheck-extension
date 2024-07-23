@@ -1,6 +1,5 @@
 "use client"
 
-import { TrendingUp } from "lucide-react"
 import {
   Label,
   PolarGrid,
@@ -9,19 +8,8 @@ import {
   RadialBarChart
 } from "recharts"
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from "~components/ui/card"
-import {
-  ChartContainer,
-  ChartTooltip,
-  type ChartConfig
-} from "~components/ui/chart"
+import { Card, CardContent, CardFooter } from "~components/ui/card"
+import { ChartContainer, type ChartConfig } from "~components/ui/chart"
 
 export function CarbonChart({ websiteCarbonData }) {
   const chartData = [
@@ -92,7 +80,14 @@ export function CarbonChart({ websiteCarbonData }) {
           Cleaner than {chartData[0].cleanerThan * 100}% of websites globally.
         </div>
         <div className="leading-none text-muted-foreground">
-          How is this <a href="https://sustainablewebdesign.org/digital-carbon-ratings/" target="_blank" className="underline">rating calculated</a>?
+          How is this{" "}
+          <a
+            href="https://sustainablewebdesign.org/digital-carbon-ratings/"
+            target="_blank"
+            className="underline">
+            rating calculated
+          </a>
+          ?
         </div>
       </CardFooter>
     </Card>
