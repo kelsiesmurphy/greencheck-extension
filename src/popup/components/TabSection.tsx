@@ -13,7 +13,7 @@ import CarbonAnalysis from "./CarbonAnalysis"
 import GreenEnergyCheck from "./GreenEnergyCheck"
 import LicenseForm from "./LicenseForm"
 
-const TabSection = ({ isValidated, handleValidation }) => {
+const TabSection = ({ isValidated, validationMessage, handleValidation }) => {
   const [url, setURL] = useState("")
   const [greenWebFoundationData, setGreenWebFoundationData] = useState(null)
   const [websiteCarbonData, setWebsiteCarbonData] = useState(null)
@@ -73,7 +73,7 @@ const TabSection = ({ isValidated, handleValidation }) => {
             setWebsiteCarbonData={setWebsiteCarbonData}
           />
         ) : (
-          <LicenseForm handleValidation={handleValidation} />
+          <LicenseForm handleValidation={handleValidation} validationMessage={validationMessage} />
         )}
       </TabsContent>
     </Tabs>

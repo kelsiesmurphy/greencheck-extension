@@ -31,7 +31,7 @@ const formSchema = z.object({
     })
 })
 
-export default function LicenseForm({ handleValidation }) {
+export default function LicenseForm({ handleValidation, validationMessage }) {
   const form = useForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -57,7 +57,7 @@ export default function LicenseForm({ handleValidation }) {
     if (!response.ok) {
       handleValidation(
         false,
-        "Failed to validate the license key. Please try again."
+        `Failed to validate the license key. Please try a valid license key, or contact GreenCheck support.`
       )
       throw new Error("Network response was not ok")
     }
@@ -111,6 +111,7 @@ export default function LicenseForm({ handleValidation }) {
               </Button>
             </form>
           </Form>
+          <p className="mt-3">{validationMessage && <p>{validationMessage}</p>}</p>
         </CardContent>
       </Card>
     </div>
