@@ -77,7 +77,8 @@ export function CarbonChart({ websiteCarbonData }) {
       </CardContent>
       <CardFooter className="flex-col gap-2 text-sm">
         <div className="flex items-center gap-2 font-medium leading-none">
-          Cleaner than {chartData[0].cleanerThan * 100}% of websites globally.
+          Cleaner than {Math.round(chartData[0].cleanerThan * 100)}% of websites
+          globally.
         </div>
         <div className="leading-none text-muted-foreground">
           How is this{" "}

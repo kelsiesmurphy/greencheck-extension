@@ -13,7 +13,10 @@ const GreenCheckDropDown = ({ result, text }) => {
         <AccordionContent className="space-y-2">
           <p>
             Hosted by:{" "}
-            <a href={result.hosted_by_website} className="font-semibold">
+            <a
+              href={result.hosted_by_website}
+              target="_blank"
+              className="font-semibold">
               {result.hosted_by}
             </a>
           </p>
@@ -24,7 +27,10 @@ const GreenCheckDropDown = ({ result, text }) => {
                 {result.supporting_documents.map((document, index) => {
                   return (
                     <li key={index}>
-                      <a href={document.link} className="hover:underline">
+                      <a
+                        href={document.link}
+                        target="_blank"
+                        className="hover:underline">
                         {document.title}
                       </a>
                     </li>

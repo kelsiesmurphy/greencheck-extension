@@ -52,6 +52,7 @@ export default function GreenEnergyCheck({ loading, greenWebFoundationData }) {
                       This website is hosted by{" "}
                       <a
                         href={greenWebFoundationData.hosted_by_website}
+                        target="_blank"
                         className="hover:underline">
                         {greenWebFoundationData.hosted_by}
                       </a>
@@ -64,6 +65,7 @@ export default function GreenEnergyCheck({ loading, greenWebFoundationData }) {
                       website host is not verified with{" "}
                       <a
                         href="https://www.thegreenwebfoundation.org/"
+                        target="_blank"
                         className="underline">
                         the Green Web Foundation
                       </a>

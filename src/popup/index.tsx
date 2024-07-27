@@ -5,7 +5,7 @@ import { ThemeProvider } from "~components/theme-provider"
 import HeaderSection from "./components/HeaderSection"
 import TabSection from "./components/TabSection"
 
-import "~style.css"
+import "~src/style.css"
 
 function IndexPopup() {
   const [isValidated, setIsValidated] = useState(false)
