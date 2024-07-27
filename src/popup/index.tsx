@@ -12,12 +12,13 @@ function IndexPopup() {
   const [validationMessage, setValidationMessage] = useState(false)
 
   useEffect(() => {
-    const storedLicenseKey = localStorage.getItem("licenseKey")
-    const validationStatus = localStorage.getItem("isValidated")
+    chrome.storage.local.get(["licenseKey", "isValidated"], (result) => {
+      const { licenseKey, isValidated } = result
 
-    if (storedLicenseKey && validationStatus === "true") {
-      setIsValidated(true)
-    }
+      if (licenseKey && isValidated === "true") {
+        setIsValidated(true)
+      }
+    })
   }, [])
 
   const handleValidation = (isValid, message) => {

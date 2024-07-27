@@ -53,7 +53,7 @@ export default function GreenEnergyCheck({ loading, greenWebFoundationData }) {
                       <a
                         href={greenWebFoundationData.hosted_by_website}
                         target="_blank"
-                        className="hover:underline">
+                        className="underline">
                         {greenWebFoundationData.hosted_by}
                       </a>
                       , a provider committed to reducing its environmental

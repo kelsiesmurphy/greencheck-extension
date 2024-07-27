@@ -71,6 +71,11 @@ const CarbonAnalysis = ({ url, setWebsiteCarbonData, websiteCarbonData }) => {
               </Button>
               <p>Please leave this extension open whilst running the test.</p>
             </div>
+          ) : Object.keys(websiteCarbonData).length === 0 ? (
+            <p>
+              There was an error running the Carbon Analysis scan on this
+              website.
+            </p>
           ) : (
             <div className="space-y-4">
               {/* <IntensityChart /> */}

@@ -1,6 +1,9 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
+
 import { Button } from "~components/ui/button"
 import {
   Card,
@@ -18,9 +21,8 @@ import {
   FormMessage
 } from "~components/ui/form"
 import { Input } from "~components/ui/input"
+
 import copyText from "../../copy.json"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
 
 const formSchema = z.object({
   licensekey: z
@@ -66,8 +68,10 @@ export default function LicenseForm({ handleValidation, validationMessage }) {
     console.log(data)
 
     if (data.success) {
-      localStorage.setItem("licenseKey", values.licensekey)
-      localStorage.setItem("isValidated", "true")
+      chrome.storage.local.set({
+        licenseKey: values.licensekey,
+        isValidated: "true"
+      })
       handleValidation(true, "License key validated successfully.")
     } else {
       handleValidation(false, "Invalid license key.")
@@ -111,7 +115,9 @@ export default function LicenseForm({ handleValidation, validationMessage }) {
               </Button>
             </form>
           </Form>
-          <p className="mt-3">{validationMessage && <p>{validationMessage}</p>}</p>
+          <p className="mt-3">
+            {validationMessage && <p>{validationMessage}</p>}
+          </p>
         </CardContent>
       </Card>
     </div>
