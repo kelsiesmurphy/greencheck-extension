@@ -54,17 +54,17 @@ const SearchResults: FC<PlasmoCSUIProps> = ({ anchor }: { anchor: any }) => {
     if (block) {
       if (!block.hasAttribute("data-checked")) {
         block.setAttribute("data-checked", "true")
-        block.textContent = "⏳ " + block.textContent
+        block.textContent = block.textContent + " ⏳"
       }
 
       if (checked) {
         if (result && result.green) {
-          block.textContent = block.textContent.replace("⏳", "🌱")
+          block.textContent = block.textContent.replace(" ⏳", " 🌱")
           if (result.hosted_by) {
             block.setAttribute("title", `Hosted by: ${result.hosted_by}`)
           }
         } else {
-          block.textContent = block.textContent.replace("⏳ ", "")
+          block.textContent = block.textContent.replace(" ⏳", "")
         }
       }
     }
