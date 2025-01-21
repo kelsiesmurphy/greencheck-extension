@@ -59,7 +59,7 @@ const SearchResults: FC<PlasmoCSUIProps> = ({ anchor }: { anchor: any }) => {
 
       if (checked) {
         if (result && result.green) {
-          block.textContent = block.textContent.replace(" ⏳", " 🌱")
+          block.textContent = block.textContent.replace(" ⏳", " ✅")
           if (result.hosted_by) {
             block.setAttribute("title", `Hosted by: ${result.hosted_by}`)
           }
