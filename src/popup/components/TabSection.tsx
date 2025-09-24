@@ -11,9 +11,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "~components/ui/tabs"
 import copyText from "../../copy.json"
 import CarbonAnalysis from "./CarbonAnalysis"
 import GreenEnergyCheck from "./GreenEnergyCheck"
-import LicenseForm from "./LicenseForm"
 
-const TabSection = ({ isValidated, validationMessage, handleValidation }) => {
+const TabSection = () => {
   const [url, setURL] = useState("")
   const [greenWebFoundationData, setGreenWebFoundationData] = useState(null)
   const [websiteCarbonData, setWebsiteCarbonData] = useState(null)
@@ -66,15 +65,11 @@ const TabSection = ({ isValidated, validationMessage, handleValidation }) => {
         />
       </TabsContent>
       <TabsContent value="tab-two" className="py-2">
-        {isValidated ? (
-          <CarbonAnalysis
-            url={url}
-            websiteCarbonData={websiteCarbonData}
-            setWebsiteCarbonData={setWebsiteCarbonData}
-          />
-        ) : (
-          <LicenseForm handleValidation={handleValidation} validationMessage={validationMessage} />
-        )}
+        <CarbonAnalysis
+          url={url}
+          websiteCarbonData={websiteCarbonData}
+          setWebsiteCarbonData={setWebsiteCarbonData}
+        />
       </TabsContent>
     </Tabs>
   )

@@ -51,9 +51,7 @@ const CarbonAnalysis = ({ url, setWebsiteCarbonData, websiteCarbonData }) => {
         <CardTitle className="text-lg">
           {copyText.popup.tabTwo.buttonText}
         </CardTitle>
-        <CardDescription>
-          {copyText.popup.tabTwo.afterLicenseKeyEntry.description}
-        </CardDescription>
+        <CardDescription>{copyText.popup.tabTwo.description}</CardDescription>
       </CardHeader>
       <CardContent>
         <>
