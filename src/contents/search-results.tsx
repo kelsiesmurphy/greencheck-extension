@@ -33,7 +33,7 @@ const backgroundWebsiteCarbonCheck = async (url: string) => {
 }
 
 export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () =>
-  document.querySelectorAll("div.g > div > div > div > div > span > a")
+  document.querySelectorAll("div.A6K0A > div > div > div > div > div > span > a")
 
 export const getShadowHostId = () => "greencheck-unique-id"
 
@@ -57,9 +57,11 @@ const SearchResults: FC<PlasmoCSUIProps> = ({ anchor }: { anchor: any }) => {
         block.textContent = "⏳ " + block.textContent
       }
 
+      console.log(result)
+
       if (checked) {
         if (result && result.green) {
-          block.textContent = block.textContent.replace(" ⏳", " 🌱")
+          block.textContent = block.textContent.replace("⏳ ", "🌱 ")
           if (result.hosted_by) {
             block.setAttribute("title", `Hosted by: ${result.hosted_by}`)
           }
@@ -70,15 +72,15 @@ const SearchResults: FC<PlasmoCSUIProps> = ({ anchor }: { anchor: any }) => {
     }
   }, [checked, result, anchor.element])
 
-  if (result && result.green)
-    return (
-      <GreenCheckDropDown
-        result={result}
-        text={
-          "This website is hosted by a provider committed to reducing its environmental impact."
-        }
-      />
-    )
+//   if (result && result.green)
+//     return (
+//       <GreenCheckDropDown
+//         result={result}
+//         text={
+//           "This website is hosted by a provider committed to reducing its environmental impact."
+//         }
+//       />
+//     )
 
   return null
 }

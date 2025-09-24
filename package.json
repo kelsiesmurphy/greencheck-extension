@@ -57,7 +57,8 @@
       "activeTab",
       "webRequest",
       "webRequestBlocking",
-      "tabs"
+      "tabs",
+      "<all_urls>"
     ],
     "host_permissions": [
       "https://*/*"

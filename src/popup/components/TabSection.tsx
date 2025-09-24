@@ -29,21 +29,28 @@ const TabSection = () => {
     return resp.message
   }
   useEffect(() => {
-    async function fetchGreenHost() {
-      const tabs = await Browser.tabs.query({
-        active: true,
-        currentWindow: true
-      })
-      setURL(tabs[0].url)
-      const greenWebFoundationResponse = await backgroundWebsiteCarbonCheck(
-        tabs[0].url
-      )
+    const fetchGreenHost = async () => {
+      setLoading(true)
 
-      setTimeout(() => {
+      try {
+        const tabs = await Browser.tabs.query({
+          active: true,
+          currentWindow: true
+        })
+        const activeURL = tabs[0]?.url ?? ""
+        setURL(activeURL)
+
+        const greenWebFoundationResponse =
+          await backgroundWebsiteCarbonCheck(activeURL)
         setGreenWebFoundationData(greenWebFoundationResponse)
+      } catch (error) {
+        console.error("Error fetching Green Web Foundation data:", error)
+        setGreenWebFoundationData(null)
+      } finally {
         setLoading(false)
-      }, 500)
+      }
     }
+
     fetchGreenHost()
   }, [])
 
@@ -53,7 +60,7 @@ const TabSection = () => {
         <TabsTrigger value="tab-one">
           <Sprout className="mr-2 h-4 w-4" /> {copyText.popup.tabOne.buttonText}
         </TabsTrigger>
-        <TabsTrigger value="tab-two">
+        <TabsTrigger value="tab-two" disabled={!url || !greenWebFoundationData}>
           <FileBarChart2 className="mr-2 h-4 w-4" />{" "}
           {copyText.popup.tabTwo.buttonText}
         </TabsTrigger>
@@ -66,8 +73,8 @@ const TabSection = () => {
       </TabsContent>
       <TabsContent value="tab-two" className="py-2">
         <CarbonAnalysis
-          url={url}
           websiteCarbonData={websiteCarbonData}
+          greenWebFoundationData={greenWebFoundationData}
           setWebsiteCarbonData={setWebsiteCarbonData}
         />
       </TabsContent>

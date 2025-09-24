@@ -14,14 +14,7 @@ const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
       )
       const data = await response.json()
 
-      const result = await new Promise<{ [key: string]: any }>((resolve) => {
-        chrome.storage.local.get(["licenseKey", "isValidated"], resolve)
-      })
-      const { licenseKey, isValidated } = result
-
-      if (licenseKey && isValidated === "true") {
-        chrome.action.setIcon({ path: data.green ? green : other })
-      }
+      chrome.action.setIcon({ path: data.green ? green : other })
 
       return data
     } catch (error) {
@@ -43,34 +36,16 @@ const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
   }
 
   chrome.tabs.onActivated.addListener(async () => {
-    const result = await new Promise<{ [key: string]: any }>((resolve) => {
-      chrome.storage.local.get(["licenseKey", "isValidated"], resolve)
-    })
-    const { licenseKey, isValidated } = result
-    if (licenseKey && isValidated === "true") {
-      await updateIconForActiveTab()
-    }
+    await updateIconForActiveTab()
   })
 
   chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
     if (changeInfo.url) {
-      const result = await new Promise<{ [key: string]: any }>((resolve) => {
-        chrome.storage.local.get(["licenseKey", "isValidated"], resolve)
-      })
-      const { licenseKey, isValidated } = result
-      if (licenseKey && isValidated === "true") {
-        await updateIconForActiveTab()
-      }
+      await updateIconForActiveTab()
     }
   })
 
-  const initialResult = await new Promise<{ [key: string]: any }>((resolve) => {
-    chrome.storage.local.get(["licenseKey", "isValidated"], resolve)
-  })
-  const { licenseKey, isValidated } = initialResult
-  if (licenseKey && isValidated === "true") {
-    await updateIconForActiveTab()
-  }
+  await updateIconForActiveTab()
 
   if (req.body.url) {
     message = await websiteCarbonCheck(req.body.url)
