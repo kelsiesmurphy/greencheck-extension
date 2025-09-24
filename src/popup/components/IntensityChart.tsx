@@ -12,7 +12,6 @@ import {
   type ChartConfig
 } from "~components/ui/chart"
 
-// Calculate 'from' and 'to' values
 const now = new Date()
 const from = new Date(now.getTime() - 8 * 60 * 60 * 1000).toISOString()
 const to = new Date(now.getTime() + 8 * 60 * 60 * 1000).toISOString()
@@ -46,7 +45,6 @@ export function IntensityChart() {
         )
         const data = await response.json()
 
-        // Preprocess the data to flatten the intensity object
         const formattedData = data.data.map((item) => ({
           from: item.from,
           to: item.to,

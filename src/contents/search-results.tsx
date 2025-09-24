@@ -22,52 +22,61 @@ export const getStyle = () => {
 const backgroundWebsiteCarbonCheck = async (url: string) => {
   const resp = await sendToBackground({
     name: "gwf_check",
-    body: {
-      url: url
-    }
+    body: { url }
   })
-
   return resp.message
 }
 
-export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () =>
-  document.querySelectorAll(
-    "div.A6K0A > div > div > div > div > div > span > a"
-  )
+export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () => {
+  return Array.from(document.querySelectorAll("a"))
+    .filter((a) => {
+      const href = a.getAttribute("href") || ""
+      const h3 = a.querySelector("h3")
+      return href.startsWith("http") && h3
+    })
+    .map((a) => ({ element: a }))
+}
 
 export const getShadowHostId = () => "greencheck-unique-id"
 
 const SearchResults: FC<PlasmoCSUIProps> = ({ anchor }: { anchor: any }) => {
-  const [result, setResult] = useState(null)
+  const [result, setResult] = useState<any>(null)
   const [checked, setChecked] = useState(false)
   const url = anchor.element.href
 
   useEffect(() => {
-    backgroundWebsiteCarbonCheck(url).then((result) => {
-      setResult(result)
-      setChecked(true)
+    if (!url) return
+    let canceled = false
+
+    backgroundWebsiteCarbonCheck(url).then((res) => {
+      if (!canceled) {
+        setResult(res)
+        setChecked(true)
+      }
     })
+
+    return () => {
+      canceled = true
+    }
   }, [url])
 
   useEffect(() => {
-    const block = anchor.element.querySelector("h3")
-    if (block) {
-      if (!block.hasAttribute("data-checked")) {
-        block.setAttribute("data-checked", "true")
-        block.textContent = "⏳ " + block.textContent
-      }
+    const h3 = anchor.element.querySelector("h3")
+    if (!h3) return
 
-      console.log(result)
+    if (!h3.hasAttribute("data-checked")) {
+      h3.setAttribute("data-checked", "true")
+      h3.textContent = "⏳ " + h3.textContent
+    }
 
-      if (checked) {
-        if (result && result.green) {
-          block.textContent = block.textContent.replace("⏳ ", "🌱 ")
-          if (result.hosted_by) {
-            block.setAttribute("title", `Hosted by: ${result.hosted_by}`)
-          }
-        } else {
-          block.textContent = block.textContent.replace("⏳ ", "")
+    if (checked && result) {
+      if (result.green) {
+        h3.textContent = h3.textContent.replace("⏳ ", "🌱 ")
+        if (result.hosted_by) {
+          h3.setAttribute("title", `Hosted by: ${result.hosted_by}`)
         }
+      } else {
+        h3.textContent = h3.textContent.replace("⏳ ", "")
       }
     }
   }, [checked, result, anchor.element])
