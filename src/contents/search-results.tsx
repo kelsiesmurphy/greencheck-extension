@@ -9,8 +9,6 @@ import { useEffect, useState } from "react"
 
 import { sendToBackground } from "@plasmohq/messaging"
 
-import GreenCheckDropDown from "~components/green-check-dropdown"
-
 export const config: PlasmoCSConfig = {
   matches: ["https://www.google.com/*"]
 }
@@ -33,7 +31,9 @@ const backgroundWebsiteCarbonCheck = async (url: string) => {
 }
 
 export const getInlineAnchorList: PlasmoGetInlineAnchorList = async () =>
-  document.querySelectorAll("div.A6K0A > div > div > div > div > div > span > a")
+  document.querySelectorAll(
+    "div.A6K0A > div > div > div > div > div > span > a"
+  )
 
 export const getShadowHostId = () => "greencheck-unique-id"
 
@@ -71,16 +71,6 @@ const SearchResults: FC<PlasmoCSUIProps> = ({ anchor }: { anchor: any }) => {
       }
     }
   }, [checked, result, anchor.element])
-
-//   if (result && result.green)
-//     return (
-//       <GreenCheckDropDown
-//         result={result}
-//         text={
-//           "This website is hosted by a provider committed to reducing its environmental impact."
-//         }
-//       />
-//     )
 
   return null
 }
